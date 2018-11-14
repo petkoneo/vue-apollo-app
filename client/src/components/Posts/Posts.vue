@@ -94,7 +94,6 @@
           row
         >
           <v-btn
-            v-btn
             color="info"
             @click="showMorePosts"
           >Show more </v-btn>
