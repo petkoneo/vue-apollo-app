@@ -32,14 +32,20 @@
               </div>
             </v-card-title>
             <v-spacer />
-            <v-btn icon>
-              <v-icon>keyboard_arrow_down</v-icon>
+            <v-btn
+              icon
+              @click="showPostCreator =! showPostCreator"
+            >
+              <v-icon>{{ `keyboard_arrow_${showPostCreator? 'down' : 'up'}` }} </v-icon>
             </v-btn>
           </v-card-actions>
 
           <!--Post creator tile-->
           <v-slide-y-transition>
-            <v-card-text class="grey lighten-4">
+            <v-card-text
+              v-show="showPostCreator"
+              class="grey lighten-4"
+            >
               <v-list-tile
                 avatar
               >
@@ -74,6 +80,26 @@
       </v-flex>
     </v-layout>
 
+    <!--Adding FetchMore-->
+    <v-layout
+      v-if="showMoreEnabled"
+      column
+    >
+      <v-flex
+        xs12
+      >
+        <v-layout
+          justify-center
+          row
+        >
+          <v-btn
+            v-btn
+            color="info"
+            @click="showMorePosts"
+          >Show more </v-btn>
+        </v-layout>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -87,7 +113,8 @@ export default {
   data () {
     return {
       pageNum: 1,
-      showMoreEnabled: true
+      showMoreEnabled: true,
+      showPostCreator: false
     }
   },
   apollo: {
