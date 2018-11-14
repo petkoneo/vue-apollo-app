@@ -13,8 +13,11 @@ import { ApolloLink } from 'apollo-link'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import VueApollo from 'vue-apollo'
 import { onError } from 'apollo-link-error'
+import moment from 'moment'
 
 import FormAlert from './components/Shared/FormAlert'
+
+Vue.prototype.moment = moment
 
 // Register a global
 Vue.component('form-alert', FormAlert)

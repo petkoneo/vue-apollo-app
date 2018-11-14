@@ -9,11 +9,12 @@ type User {
 }
 
 type Post {
+    _id: ID
     title: String!
     imageUrl: String!
     categories: [String]!
     description: String!
-    createDate: String
+    createdDate: String
     likes: Int
     createdBy: User!
     messages: [Message]

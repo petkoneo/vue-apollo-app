@@ -149,9 +149,9 @@ export default {
           creatorId: this.getUser._id
         })
       }
+      this.$router.push('/')
     }
   }
-
 }
 </script>
 

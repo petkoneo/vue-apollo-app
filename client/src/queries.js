@@ -17,10 +17,15 @@ query($pageSize: Int!, $pageNum: Int!) {
   posts {
     title
     imageUrl
+    createdBy{
+      avatar
+      username
+      _id
+    }
     categories
     description
     likes
-    createDate
+    createdDate
     messages {
     _id
       messageBody
