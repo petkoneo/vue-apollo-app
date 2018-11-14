@@ -76,16 +76,24 @@
         class="mb-3"
       >
         <v-flex xs12>
-          <v-form>
+          <v-form
+            ref="form"
+            v-model="isFormValid"
+            lazy-validation
+            @submit.prevent="addPostMessage"
+          >
             <v-layout row>
               <v-flex xs12>
                 <v-text-field
+                  :rules="messageRules"
+                  v-model="messageBody"
                   clearable
                   required
-                  append-outer-icon="send"
+                  :append-outer-icon="messageBody && 'send'"
                   label="Add Message"
                   type="text"
                   prepend-icon="email"
+                  @click:append-outer="addPostMessage"
                 />
               </v-flex>
             </v-layout>
@@ -117,11 +125,11 @@
                   >
                 </v-list-tile-avatar>
 
-                <v-list-content>
+                <v-list-tile-content>
                   <v-list-tile-title>{{ message.messageBody }}</v-list-tile-title>
                   <v-list-tile-sub-title>{{ message.messageUser.username }}</v-list-tile-sub-title>
                   <span class="grey--text text--lighten-1 hidden-xs-only"> {{ message.messageDate }}</span>
-                </v-list-content>
+                </v-list-tile-content>
 
                 <v-list-tile-action class="hidden-xs-only">
                   <v-icon color="grey">chat_bubble</v-icon>
@@ -137,7 +145,7 @@
 </template>
 
 <script>
-import { GET_POST } from '../../queries'
+import { GET_POST, ADD_POST_MESSAGE } from '../../queries'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -150,7 +158,13 @@ export default {
   },
   data () {
     return {
-      dialog: false
+      dialog: false,
+      messageBody: '',
+      isFormValid: true,
+      messageRules: [
+        message => !!message || 'Message is required',
+        message => message.length < 50 || 'Message must be less than 50 characters'
+      ]
     }
   },
   apollo: {
@@ -174,6 +188,31 @@ export default {
       if (window.innerWidth > 500) {
         this.dialog = !this.dialog
       }
+    },
+    addPostMessage () {
+      const variables = {
+        messageBody: this.messageBody,
+        userId: this.getUser._id,
+        postId: this.postId
+      }
+      this.$apollo.mutate({
+        mutation: ADD_POST_MESSAGE,
+        variables,
+        update: (cache, { data: { addPostMessage } }) => {
+          const data = cache.readQuery({
+            query: GET_POST,
+            variables: { postId: this.postId }
+          })
+          data.getPost.messages.unshift(addPostMessage)
+          cache.writeQuery({
+            query: GET_POST,
+            variables: { postId: this.postId },
+            data
+          })
+        }
+      }).then(({ data }) => {
+        console.log(data.addPostMessage)
+      }).catch(err => console.log(err))
     }
   }
 }

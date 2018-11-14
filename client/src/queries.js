@@ -98,6 +98,21 @@ mutation($title: String!, $imageUrl: String!, $categories: [String!], $descripti
   }
 }`
 
+export const ADD_POST_MESSAGE = gql`
+mutation($messageBody: String!, $userId: ID!, $postId: ID!){
+  addPostMessage(messageBody: $messageBody, userId: $userId, postId: $postId){
+  _id
+  messageBody
+  messageDate
+  messageUser{
+    _id
+    username
+    avatar
+    }
+  }
+}
+`
+
 // User mutations
 export const SIGNIN_USER = gql`mutation($username:String!, $password: String!){
     signinUser(username:$username, password: $password){
