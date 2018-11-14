@@ -94,7 +94,7 @@ mutation($title: String!, $imageUrl: String!, $categories: [String!], $descripti
     imageUrl
     description
     categories
-    createDate
+    createdDate
   }
 }`
 

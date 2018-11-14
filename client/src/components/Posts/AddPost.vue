@@ -148,8 +148,8 @@ export default {
           description: this.description,
           creatorId: this.getUser._id
         })
+        this.$router.push('/')
       }
-      this.$router.push('/')
     }
   }
 }
