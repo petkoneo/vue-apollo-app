@@ -85,8 +85,8 @@
             <v-layout row>
               <v-flex xs12>
                 <v-text-field
-                  :rules="messageRules"
                   v-model="messageBody"
+                  :rules="messageRules"
                   clearable
                   required
                   :append-outer-icon="messageBody && 'send'"
@@ -132,7 +132,7 @@
                 </v-list-tile-content>
 
                 <v-list-tile-action class="hidden-xs-only">
-                  <v-icon color="grey">chat_bubble</v-icon>
+                  <v-icon :color="checkIfOwnMessage(message) ? 'accent' : 'grey'">chat_bubble</v-icon>
                 </v-list-tile-action>
               </v-list-tile>
             </template>
@@ -190,29 +190,34 @@ export default {
       }
     },
     addPostMessage () {
-      const variables = {
-        messageBody: this.messageBody,
-        userId: this.getUser._id,
-        postId: this.postId
-      }
-      this.$apollo.mutate({
-        mutation: ADD_POST_MESSAGE,
-        variables,
-        update: (cache, { data: { addPostMessage } }) => {
-          const data = cache.readQuery({
-            query: GET_POST,
-            variables: { postId: this.postId }
-          })
-          data.getPost.messages.unshift(addPostMessage)
-          cache.writeQuery({
-            query: GET_POST,
-            variables: { postId: this.postId },
-            data
-          })
+      if (this.$refs.form.validate()) {
+        const variables = {
+          messageBody: this.messageBody,
+          userId: this.getUser._id,
+          postId: this.postId
         }
-      }).then(({ data }) => {
-        console.log(data.addPostMessage)
-      }).catch(err => console.log(err))
+        this.$apollo.mutate({
+          mutation: ADD_POST_MESSAGE,
+          variables,
+          update: (cache, { data: { addPostMessage } }) => {
+            const data = cache.readQuery({
+              query: GET_POST,
+              variables: { postId: this.postId }
+            })
+            data.getPost.messages.unshift(addPostMessage)
+            cache.writeQuery({
+              query: GET_POST,
+              variables: { postId: this.postId },
+              data
+            })
+          }
+        }).then(({ data }) => {
+          this.$refs.form.reset()
+        }).catch(err => console.log(err))
+      }
+    },
+    checkIfOwnMessage (message) {
+      return this.getUser && this.getUser._id === message.messageUser._id
     }
   }
 }
