@@ -10,6 +10,26 @@ export const GET_POSTS = gql`query {
         }
         `
 
+export const INFINITE_SCROLL_POSTS = gql`
+query($pageSize: Int!, $pageNum: Int!) {
+  infiniteScrollPosts(pageSize: $pageSize, pageNum: $pageNum) {
+  hasMore
+  posts {
+    title
+    imageUrl
+    categories
+    description
+    likes
+    createDate
+    messages {
+    _id
+      messageBody
+    }
+  }
+  }
+}
+`
+
 // User queries
 export const GET_CURRENT_USER = gql`
   query{
