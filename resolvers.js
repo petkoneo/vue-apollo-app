@@ -8,6 +8,12 @@ const createToken = (user, secret, expiresIn) => {
 
 module.exports = {
   Query: {
+    getPost: async (_, { postId }, { Post }) => {
+      return await Post.findOne({ _id: postId }).populate({
+        path: 'messages.messageUser',
+        model: 'User'
+      })
+    },
     getCurrentUser: async (_, args, { User, currentUser }) => {
       if (currentUser.name === 'AuthenticationError') {
         return currentUser

@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 
 import AddPost from './components/Posts/AddPost'
 import Posts from './components/Posts/Posts'
+import Post from './components/Posts/Post'
 
 import Profile from './components/Auth/Profile'
 import SignIn from './components/Auth/SignIn'
@@ -32,6 +33,12 @@ export default new Router({
       path: '/posts',
       name: 'posts',
       component: Posts
+    },
+    {
+      path: '/posts/:postId',
+      name: 'post',
+      component: Post,
+      props: true
     },
     {
       path: '/profile',

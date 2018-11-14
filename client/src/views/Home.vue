@@ -34,6 +34,7 @@
           v-for="(post, id) in getPosts"
           :key="id"
           :src="post.imageUrl"
+          @click.native="goToPost(post._id)"
         >
           <h1 id="carousel-title">{{ post.title }}</h1>
         </v-carousel-item>
@@ -58,6 +59,9 @@ export default {
     getCarouselPosts () {
       // handle posts data for carousel
       this.$store.dispatch('getPosts')
+    },
+    goToPost (id) {
+      this.$router.push(`/posts/${id}`)
     }
   }
 }

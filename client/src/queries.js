@@ -3,18 +3,47 @@ import gql from 'graphql-tag'
 // Post Queries
 export const GET_POSTS = gql`query {
           getPosts{
+          _id
           title
           imageUrl
+          likes
+          categories
+          createdDate
           description
           }
         }
         `
+
+export const GET_POST = gql`
+query($postId: ID!) {
+  getPost(postId: $postId) {
+  _id
+  title
+  imageUrl
+  categories
+  description
+  likes
+  createdDate
+  messages {
+    _id
+    messageBody
+    messageDate
+    messageUser {
+      _id
+      username
+      avatar
+    }
+  }
+  }
+}
+`
 
 export const INFINITE_SCROLL_POSTS = gql`
 query($pageSize: Int!, $pageNum: Int!) {
   infiniteScrollPosts(pageSize: $pageSize, pageNum: $pageNum) {
   hasMore
   posts {
+    _id
     title
     imageUrl
     createdBy{
@@ -46,6 +75,7 @@ export const GET_CURRENT_USER = gql`
     avatar
     joinDate
     favorites{
+    _id
     title
     imageUrl
       }

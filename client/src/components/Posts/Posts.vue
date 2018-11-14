@@ -17,6 +17,7 @@
       >
         <v-card
           hover
+          @click.native="goToPost(post._id)"
         >
           <v-img
             :src="post.imageUrl"
@@ -155,9 +156,8 @@ export default {
         }
       })
     },
-    dater (date) {
-      const data = new Date(date)
-      return data.getDate()
+    goToPost (id) {
+      this.$router.push(`/posts/${id}`)
     }
   }
 }
