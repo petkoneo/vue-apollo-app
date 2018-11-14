@@ -17,12 +17,12 @@
       >
         <v-card
           hover
-          @click.native="goToPost(post._id)"
         >
           <v-img
             :src="post.imageUrl"
             height="30vh"
             lazy
+            @click.native="goToPost(post._id)"
           />
 
           <v-card-actions>

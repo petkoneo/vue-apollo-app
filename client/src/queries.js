@@ -56,7 +56,7 @@ query($pageSize: Int!, $pageNum: Int!) {
     likes
     createdDate
     messages {
-    _id
+      _id
       messageBody
     }
   }
