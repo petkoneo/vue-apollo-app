@@ -18,6 +18,7 @@
               v-if="getUser"
               large
               icon
+              @click="unlikePost"
             ><v-icon
               large
               color="grey"
@@ -145,7 +146,7 @@
 </template>
 
 <script>
-import { GET_POST, ADD_POST_MESSAGE } from '../../queries'
+import { GET_POST, ADD_POST_MESSAGE, LIKE_POST, UNLIKE_POST } from '../../queries'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -181,6 +182,59 @@ export default {
     ...mapGetters(['getUser'])
   },
   methods: {
+    likePost () {
+      this.$apollo.mutate({
+        mutation: LIKE_POST,
+        variables: {
+          postId: this.postId,
+          username: this.getUser.username
+        },
+        update: (cache, { data: { likePost } }) => {
+          const data = cache.readQuery({
+            query: GET_POST,
+            variables: {
+              postId: this.postId
+            }
+          })
+          data.getPost.likes += 1
+          cache.writeQuery({
+            query: GET_POST,
+            variables: { postId: this.postId },
+            data
+          })
+        }
+      }).then(({ data }) => {
+        const updatedUser = { ...this.getUser, favorites: data.likePost.favorites }
+        this.$store.commit('SET_USER', updatedUser)
+      }).catch(err => console.log(err))
+    },
+    unlikePost () {
+      this.$apollo.mutate({
+        mutation: UNLIKE_POST,
+        variables: {
+          postId: this.postId,
+          username: this.getUser.username
+        },
+        update: (cache, { data: { unlikePost } }) => {
+          const data = cache.readQuery({
+            query: GET_POST,
+            variables: {
+              postId: this.postId
+            }
+          })
+          data.getPost.likes -= 1
+          cache.writeQuery({
+            query: GET_POST,
+            variables: { postId: this.postId },
+            data
+          })
+        }
+      }).then(({ data }) => {
+        console.log(data)
+        const updatedUser = { ...this.getUser, favorites: data.unlikePost.favorites }
+        this.$store.commit('SET_USER', updatedUser)
+      }).catch(err => console.log(err))
+    },
     goToPreviousPage () {
       this.$router.go(-1)
     },

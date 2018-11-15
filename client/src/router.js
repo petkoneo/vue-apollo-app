@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
 
-import AddPost from './components/Posts/AddPost'
-import Posts from './components/Posts/Posts'
-import Post from './components/Posts/Post'
+const Home = () => import('./views/Home.vue')
+const AddPost = () => import('./components/Posts/AddPost')
+const Posts = () => import('./components/Posts/Posts')
+const Post = () => import('./components/Posts/Post')
 
-import Profile from './components/Auth/Profile'
-import SignIn from './components/Auth/SignIn'
-import SignUp from './components/Auth/SignUp'
+const Profile = () => import('./components/Auth/Profile')
+const SignIn = () => import('./components/Auth/SignIn')
+const SignUp = () => import('./components/Auth/SignUp')
 
 import AuthGuard from './AuthGuard'
 
