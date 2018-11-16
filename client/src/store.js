@@ -52,6 +52,9 @@ export default new Vuex.Store({
       if (payload != null) {
         state.searchResults = payload
       }
+    },
+    CLEAR_SEARCH_RESULTS: state => {
+      state.searchResults = []
     }
   },
   actions: {

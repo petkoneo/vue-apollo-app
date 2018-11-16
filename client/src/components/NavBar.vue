@@ -92,10 +92,16 @@
           <v-list-tile
             v-for="result in getSearchResults"
             :key="result._id"
+            @click="goToSearchResult(result._id)"
           >
-            <v-list-title>{{ result.title }}
-              <span class="font-weight-thin">{{ result.description }}</span>
-            </v-list-title>
+            <v-list-tile-title>{{ result.title }}
+              <span class="font-weight-thin">{{ formatDescription(result.description) }}</span>
+            </v-list-tile-title>
+
+            <!--Show Icon if favorited by user-->
+            <v-list-tile-action v-if="checkIfUserFavorite(result._id)">
+              <v-icon color="red">favorite</v-icon>
+            </v-list-tile-action>
           </v-list-tile>
         </v-list>
       </v-card>
@@ -231,6 +237,20 @@ export default {
       this.$store.dispatch('searchPosts', {
         searchTerm: this.searchTerm
       })
+    },
+    goToSearchResult (resultId) {
+      // Clear search results
+      this.searchTerm = ''
+      // Go to desired result
+      this.$router.push(`/posts/${resultId}`)
+      // creat search results
+      this.$store.commit('CLEAR_SEARCH_RESULTS')
+    },
+    formatDescription (desc) {
+      return desc.length > 20 ? `${desc.slice(0, 20)}...` : desc
+    },
+    checkIfUserFavorite (resultId) {
+      return this.getUserFavorites && this.getUserFavorites.some(fav => fav._id === resultId)
     }
   }
 }
