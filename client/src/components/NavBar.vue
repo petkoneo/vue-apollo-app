@@ -82,6 +82,24 @@
         @input="searchPosts"
       />
 
+      <!--Search results card-->
+      <v-card
+        v-if="getSearchResults.length"
+        id="search__card"
+        dark
+      >
+        <v-list>
+          <v-list-tile
+            v-for="result in getSearchResults"
+            :key="result._id"
+          >
+            <v-list-title>{{ result.title }}
+              <span class="font-weight-thin">{{ result.description }}</span>
+            </v-list-title>
+          </v-list-tile>
+        </v-list>
+      </v-card>
+
       <v-spacer />
 
       <v-toolbar-items class="hidden-xs-only">
@@ -144,7 +162,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getUser', 'getUserFavorites']),
+    ...mapGetters(['getUser', 'getUserFavorites', 'getSearchResults']),
     horizontalNavItems () {
       let items = [
         {
@@ -237,5 +255,15 @@ export default {
     90%{
       transform: translate3d(0, -4px, 0);
     }
+  }
+
+  /*Search results Card*/
+
+  #search__card {
+    position: absolute;
+    width: 100vw;
+    z-index: 8;
+    top:100%;
+    left:0
   }
 </style>
