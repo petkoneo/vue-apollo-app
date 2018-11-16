@@ -72,12 +72,14 @@
       <v-spacer />
 
       <v-text-field
+        v-model="searchTerm"
         flex
         prepend-icon="search"
         placeholder="Search posts"
         color="accent"
         single-line
         hide-details
+        @input="searchPosts"
       />
 
       <v-spacer />
@@ -137,7 +139,8 @@ export default {
   data () {
     return {
       sideNav: false,
-      badgeAnimated: false
+      badgeAnimated: false,
+      searchTerm: ''
     }
   },
   computed: {
@@ -205,6 +208,11 @@ export default {
   methods: {
     signoutUser () {
       this.$store.dispatch('signoutUser')
+    },
+    searchPosts () {
+      this.$store.dispatch('searchPosts', {
+        searchTerm: this.searchTerm
+      })
     }
   }
 }

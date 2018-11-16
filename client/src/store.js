@@ -4,7 +4,7 @@ import router from './router'
 
 import { apolloClient } from './main'
 
-import { GET_POSTS, SIGNIN_USER, GET_CURRENT_USER, SIGNUP_USER, ADD_POST } from './queries'
+import { GET_POSTS, SIGNIN_USER, GET_CURRENT_USER, SIGNUP_USER, ADD_POST, SEARCH_POSTS } from './queries'
 
 Vue.use(Vuex)
 
@@ -76,6 +76,14 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
           console.error(err)
         })
+    },
+    searchPosts: ({ commit }, payload) => {
+      apolloClient.query({
+        query: SEARCH_POSTS,
+        variables: payload
+      }).then(({ data }) => {
+        console.log(data.searchPosts)
+      }).catch(err => console.log(err))
     },
     signinUser: ({ commit }, payload) => {
       commit('CLEAR_ERROR')
