@@ -102,8 +102,12 @@
           <v-badge
             rigth
             color="blue darken-2"
+            :class="{ 'bounce': badgeAnimated }"
           >
-            <span slot="badge">1</span>
+            <span
+              v-if="getUserFavorites.length"
+              slot="badge"
+            >{{ getUserFavorites.length }}</span>
             Profile
           </v-badge>
         </v-btn>
@@ -132,11 +136,12 @@ export default {
   name: 'NavBar',
   data () {
     return {
-      sideNav: false
+      sideNav: false,
+      badgeAnimated: false
     }
   },
   computed: {
-    ...mapGetters(['getUser']),
+    ...mapGetters(['getUser', 'getUserFavorites']),
     horizontalNavItems () {
       let items = [
         {
@@ -188,6 +193,15 @@ export default {
       return items
     }
   },
+  watch: {
+    getUserFavorites (value) {
+      // if the value changes we animate
+      if (value) {
+        this.badgeAnimated = true
+        setTimeout(() => (this.badgeAnimated = false), 1000)
+      }
+    }
+  },
   methods: {
     signoutUser () {
       this.$store.dispatch('signoutUser')
@@ -197,5 +211,23 @@ export default {
 </script>
 
 <style>
+/*user favorite animation*/
+  .bounce {
+    animation: bounce 1s both;
+  }
 
+  @keyframes bounce {
+    0%, 20%, 56%, 80%, 100% {
+      transform: translate3d(0, 0, 0)
+    }
+    40%, 43% {
+      transform: translate3d(0, -10px, 0)
+    }
+    70% {
+      transform: translate3d(0, -10px, 0);
+    }
+    90%{
+      transform: translate3d(0, -4px, 0);
+    }
+  }
 </style>
