@@ -18,15 +18,15 @@
               v-if="getUser"
               large
               icon
-              @click="unlikePost"
+              @click="toggleLike"
             ><v-icon
+              :color="checkIfPostLiked(getPost._id) ? 'red' : 'grey'"
               large
-              color="grey"
             >favorite</v-icon></v-btn>
             <h3 class="ml-3 font-weight-thin">{{ getPost.likes }} Likes</h3>
             <v-spacer />
             <v-icon
-              color="info"
+              color="grey"
               large
               @click="goToPreviousPage"
             >arrow_back</v-icon>
@@ -51,7 +51,6 @@
               />
             </v-card>
           </v-dialog>
-
           <v-card-text>
             <span
               v-for="(category, i) in getPost.categories"
@@ -173,13 +172,14 @@ export default {
       query: GET_POST,
       variables () {
         return {
+          postLiked: false,
           postId: this.postId
         }
       }
     }
   },
   computed: {
-    ...mapGetters(['getUser'])
+    ...mapGetters(['getUser', 'getUserFavorites'])
   },
   methods: {
     likePost () {
@@ -230,7 +230,6 @@ export default {
           })
         }
       }).then(({ data }) => {
-        console.log(data)
         const updatedUser = { ...this.getUser, favorites: data.unlikePost.favorites }
         this.$store.commit('SET_USER', updatedUser)
       }).catch(err => console.log(err))
@@ -272,6 +271,23 @@ export default {
     },
     checkIfOwnMessage (message) {
       return this.getUser && this.getUser._id === message.messageUser._id
+    },
+    toggleLike () {
+      if (this.postLiked) {
+        this.unlikePost()
+      } else {
+        this.likePost()
+      }
+    },
+    checkIfPostLiked (postId) {
+      // check if user favorites includes post with id of PostId
+      if (this.getUserFavorites && this.getUserFavorites.some(fav => fav._id === postId)) {
+        this.postLiked = true
+        return true
+      } else {
+        this.postLiked = false
+        return false
+      }
     }
   }
 }

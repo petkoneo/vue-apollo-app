@@ -21,7 +21,8 @@ export default new Vuex.Store({
     getLoading: state => state.loading,
     getUser: state => state.user,
     getError: state => state.error,
-    getAuthError: state => state.authError
+    getAuthError: state => state.authError,
+    getUserFavorites: state => state.user && state.user.favorites
   },
   mutations: {
     SET_POSTS: (state, payload) => {
