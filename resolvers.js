@@ -36,6 +36,11 @@ module.exports = {
           model: 'User'
         })
     },
+    getUserPosts: async (_, { userId }, { Post }) => {
+      return await Post.find({
+        createdBy: userId
+      })
+    },
     infiniteScrollPosts: async (_, { pageNum, pageSize }, { Post }) => {
       let posts
       if (pageNum === 1) {

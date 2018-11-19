@@ -38,6 +38,20 @@ query($postId: ID!) {
 }
 `
 
+export const GET_USER_POST = gql`
+  query($userId: ID!) {
+    getUserPosts(userId: $userId){
+    _id
+    title
+    imageUrl
+    description
+    categories
+    createdDate
+    likes
+    }
+  }
+`
+
 export const SEARCH_POSTS = gql`
   query($searchTerm: String) {
     searchPosts(searchTerm: $searchTerm) {
