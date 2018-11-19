@@ -111,6 +111,7 @@
               fab
               small
               dark
+              @click="editPostDialog = true"
             >
               <v-icon>edit</v-icon>
             </v-btn>
@@ -134,6 +135,93 @@
       </v-layout>
     </v-container>
 
+    <!--Edit Post dialog-->
+    <v-dialog
+      v-model="editPostDialog"
+      xs12
+      sm6
+      persistent
+      offset-sm3
+    >
+      <v-card>
+        <v-card-title class="headline grey lighten-2">
+          Update Post
+        </v-card-title>
+        <v-container>
+          <v-form
+            ref="form"
+            v-model="isFormValid"
+            lazy-validation
+            @submit.prevent="updateUserPost"
+          >
+
+            <!--Title input-->
+            <v-layout row>
+              <v-flex xs12>
+                <v-text-field
+                  v-model="title"
+                  :rules="titleRules"
+                  label="Post title"
+                  type="text"
+                  required
+                />
+              </v-flex>
+            </v-layout>
+
+            <!--Image URL-->
+            <v-layout row>
+              <v-flex xs12>
+                <v-text-field
+                  v-model="imageUrl"
+                  :rules="imageRules"
+                  label="Image URL"
+                  type="text"
+                  required
+                />
+              </v-flex>
+            </v-layout>
+
+            <!--image preview-->
+            <v-layout row><v-flex xs12><img
+              :src="imageUrl"
+              :alt="imageUrl"
+              height="300px"
+            ></v-flex></v-layout>
+
+            <!--Categories-->
+            <v-layout row><v-flex xs12><v-select
+              v-model="categories"
+              :rules="categoriesRules"
+              :items="['Art', 'Education', 'Travel', 'Music', 'Photography', 'Technology']"
+              multiple
+              label="Categories"
+            /></v-flex></v-layout>
+
+            <!--Description of Post-->
+            <v-layout row><v-flex xs12> <v-textarea
+              v-model="description"
+              :rules="descRules"
+              label="Description"
+            /></v-flex></v-layout>
+            <v-divider />
+
+            <v-card-actions>
+              <v-spacer />
+              <v-btn
+                type="submit"
+                class="success--text"
+                flat
+              >Update</v-btn>
+              <v-btn
+                class="error--text"
+                flat
+                @click="editPostDialog = false"
+              >Cancel</v-btn>
+            </v-card-actions>
+          </v-form>
+        </v-container>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -142,6 +230,30 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
+  data () {
+    return {
+      editPostDialog: false,
+      isFormValid: true,
+      title: '',
+      imageUrl: '',
+      categories: [],
+      description: '',
+      titleRules: [
+        title => !!title || 'Title is required',
+        title => title.length < 20 || 'Title must have less than 20 characters'
+      ],
+      imageRules: [
+        image => !!image || 'Image is required'
+      ],
+      categoriesRules: [
+        categories => categories.length >= 1 || 'At least one category is required'
+      ],
+      descRules: [
+        desc => !!desc || 'Description is required',
+        desc => desc.length < 200 || 'Description has to be less then 200'
+      ]
+    }
+  },
   computed: {
     ...mapGetters(['getUser', 'getUserFavorites', 'getUserPosts'])
   },
@@ -153,6 +265,9 @@ export default {
       this.$store.dispatch('getUserPosts', {
         userId: this.getUser._id
       })
+    },
+    updateUserPost () {
+      // this.$store.dispatch('userPost')
     }
   }
 }
