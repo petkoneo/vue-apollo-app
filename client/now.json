@@ -1,0 +1,17 @@
+{
+  "name": "shareless",
+  "type": "static",
+  "static": {
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "alias": "vue-shareless",
+  "files": [
+    "dist"
+  ]
+}
