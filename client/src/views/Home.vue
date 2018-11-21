@@ -2,6 +2,8 @@
   <v-container
     text-xs-center
   >
+
+    <!--Loading Spinner-->
     <v-layout row>
       <v-dialog
         v-model="getLoading"
@@ -24,6 +26,27 @@
         </v-container>
       </v-dialog>
     </v-layout>
+
+    <!--Explore Posts-->
+    <v-layout
+      v-if="!loading"
+      row
+      wrap
+      class="mt-2 mb-3"
+    >
+      <v-flex xs12>
+        <v-btn
+          class="secondary"
+          to="/posts"
+          large
+          dark
+        >
+          Explore Post
+        </v-btn>
+      </v-flex>
+    </v-layout>
+
+    <!--Post carousel-->
     <v-flex xs12>
       <v-carousel
         v-if="!getLoading && getPosts.length > 0"
@@ -70,6 +93,7 @@ export default {
 <style>
   #carousel-title{
     position: absolute;
+    cursor: pointer;
     background-color: rgb(0, 0, 0, 0.5);
     color: white;
     border-radius: 5px 5px 0 0;

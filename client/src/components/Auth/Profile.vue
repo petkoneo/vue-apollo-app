@@ -62,12 +62,12 @@
           <v-card
             class="mt-3 m1 mr-2"
             hover
-            :to="`posts/${favorite._id}`"
           >
             <v-img
               height="30vh"
               :src="favorite.imageUrl"
               :alt="favorite.title"
+              @click="goToPost(favorite._id)"
             />
             <v-card-text>{{ favorite.title }}</v-card-text>
           </v-card>
@@ -104,7 +104,9 @@
           xs12
           sm-6
         >
-          <v-card class="mt3 ml-1 mr-2">
+          <v-card
+            class="mt-4 ml-1 mr-2"
+          >
             <v-btn
               color="info"
               floating
@@ -127,8 +129,10 @@
             </v-btn>
             <v-img
               heigth="30vh"
+              class="changeCursor"
               :src="post.imageUrl"
               :alt="post.title"
+              @click="goToPost(post._id)"
             />
             <v-card-text>{{ post.title }}</v-card-text>
           </v-card>
@@ -263,6 +267,9 @@ export default {
     this.userPosts()
   },
   methods: {
+    goToPost (id) {
+      this.$router.push(`/posts/${id}`)
+    },
     userPosts () {
       this.$store.dispatch('getUserPosts', {
         userId: this.getUser._id
@@ -303,5 +310,7 @@ export default {
 </script>
 
 <style>
-
+.changeCursor{
+  cursor: pointer;
+}
 </style>

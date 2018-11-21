@@ -59,10 +59,9 @@
 
                 <v-list-tile-content>
                   <v-list-tile-title class="text--primary">{{ post.createdBy.username }}</v-list-tile-title>
-                  <v-list-tile-sub-title class="font-weight-thin">Added {{ moment(post.createdDate).format('YYYY-MM-DD') }}</v-list-tile-sub-title>
+                  <!--<v-list-tile-sub-title class="font-weight-thin">Added {{ moment(post.createdDate).format('YYYY-MM-DD') }}</v-list-tile-sub-title>-->
                 </v-list-tile-content>
 
-                {{ post.createdDate }}
                 <v-list-tile-action>
                   <v-btn
                     icon
@@ -113,7 +112,7 @@ export default {
   data () {
     return {
       pageNum: 1,
-      showMoreEnabled: true,
+      // showMoreEnabled: true,
       showPostCreator: false
     }
   },
@@ -124,6 +123,11 @@ export default {
         pageNum: 1,
         pageSize
       }
+    }
+  },
+  computed: {
+    showMoreEnabled () {
+      return this.infiniteScrollPosts && this.infiniteScrollPosts.hasMore
     }
   },
   methods: {
@@ -139,7 +143,7 @@ export default {
         updateQuery: (prevResult, { fetchMoreResult }) => {
           const newPosts = fetchMoreResult.infiniteScrollPosts.posts
           const hasMore = fetchMoreResult.infiniteScrollPosts.hasMore
-          this.showMoreEnabled = hasMore
+          // this.showMoreEnabled = hasMore
 
           return {
             infiniteScrollPosts: {
