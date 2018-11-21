@@ -4,7 +4,16 @@ import router from './router'
 
 import { apolloClient } from './main'
 
-import { GET_POSTS, SIGNIN_USER, GET_CURRENT_USER, SIGNUP_USER, ADD_POST, SEARCH_POSTS, GET_USER_POST } from './queries'
+import {
+  GET_POSTS,
+  SIGNIN_USER,
+  GET_CURRENT_USER,
+  SIGNUP_USER,
+  ADD_POST,
+  SEARCH_POSTS,
+  GET_USER_POST,
+  UPDATE_USER_POST
+} from './queries'
 
 Vue.use(Vuex)
 
@@ -74,6 +83,20 @@ export default new Vuex.Store({
         console.error(e)
         commit('SET_LOADING', false)
       })
+    },
+    updateUserPost: ({ state, commit }, payload) => {
+      apolloClient.mutate({
+        mutation: UPDATE_USER_POST,
+        variables: payload
+      })
+        .then(({ data }) => {
+          const index = state.userPosts.findIndex(post => post._id === data.updateUserPost._id)
+          const userPosts = [...state.userPosts.slice(0, index),
+            data.updateUserPost,
+            ...state.userPosts.slice(index + 1)]
+          commit('SET_USER_POSTS', userPosts)
+        })
+        .catch(e => console.log(e))
     },
     setAuthError: ({ commit }, payload) => {
       commit('SET_AUTH_ERROR', payload)

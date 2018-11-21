@@ -111,7 +111,7 @@
               fab
               small
               dark
-              @click="editPostDialog = true"
+              @click="loadPost(post)"
             >
               <v-icon>edit</v-icon>
             </v-btn>
@@ -208,6 +208,7 @@
             <v-card-actions>
               <v-spacer />
               <v-btn
+                :disabled="!isFormValid"
                 type="submit"
                 class="success--text"
                 flat
@@ -267,7 +268,25 @@ export default {
       })
     },
     updateUserPost () {
-      // this.$store.dispatch('userPost')
+      if(this.$refs.form.validate()){
+      this.$store.dispatch('updateUserPost', {
+        postId: this.postId,
+        userId: this.getUser._id,
+        title: this.title,
+        imageUrl: this.imageUrl,
+        categories: this.categories,
+        description: this.description
+      })
+      this.editPostDialog = false
+      }
+    },
+    loadPost ({ _id, title, imageUrl, categories, description }, editPostDialog = true) {
+      this.editPostDialog = editPostDialog
+      this.postId = _id
+      this.title = title
+      this.imageUrl = imageUrl
+      this.categories = categories
+      this.description = description
     }
   }
 }

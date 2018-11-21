@@ -112,7 +112,7 @@ export const GET_CURRENT_USER = gql`
 // Post Mutations
 export const ADD_POST = gql`
 mutation($title: String!, $imageUrl: String!, $categories: [String!], $description: String!, $creatorId: ID!){
-  addPost(title:$ title, imageUrl:$imageUrl, categories:$categories, description:$description, creatorId:$creatorId) {
+  addPost(title: $title, imageUrl:$imageUrl, categories:$categories, description:$description, creatorId:$creatorId) {
     createdBy{
       _id
     }
@@ -122,11 +122,12 @@ mutation($title: String!, $imageUrl: String!, $categories: [String!], $descripti
     categories
     createdDate
   }
-}`
+}
+`
 
 export const UPDATE_USER_POST = gql`
-mutation($postId: ID!, $userId: ID!, $title: String!, $imageUrl: String!, $categories: [String]!, $description: String!){
-  updateUserPost(postId: $postId, userId: $userId, title: $title, imageUrl:$imageUrl, categories: $categories, description: $description){
+mutation ($postId: ID!, $userId: ID!, $title: String!, $imageUrl: String!, $categories: [String!], $description: String!){
+  updateUserPost(postId: $postId, userId: $userId, title: $title, imageUrl: $imageUrl, categories: $categories, description: $description){
   _id
   title
   imageUrl
@@ -139,10 +140,11 @@ mutation($postId: ID!, $userId: ID!, $title: String!, $imageUrl: String!, $categ
     avatar
   }
 }
+}
 `
 
 export const ADD_POST_MESSAGE = gql`
-mutation($messageBody: String!, $userId: ID!, $postId: ID!){
+mutation($messageBody: String!, $userId: ID!, $postId: ID!) {
   addPostMessage(messageBody: $messageBody, userId: $userId, postId: $postId){
   _id
   messageBody
