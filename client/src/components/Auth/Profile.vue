@@ -121,6 +121,7 @@
               fab
               small
               dark
+              @click="deleteUserPost(post)"
             >
               <v-icon>delete</v-icon>
             </v-btn>
@@ -268,16 +269,16 @@ export default {
       })
     },
     updateUserPost () {
-      if(this.$refs.form.validate()){
-      this.$store.dispatch('updateUserPost', {
-        postId: this.postId,
-        userId: this.getUser._id,
-        title: this.title,
-        imageUrl: this.imageUrl,
-        categories: this.categories,
-        description: this.description
-      })
-      this.editPostDialog = false
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch('updateUserPost', {
+          postId: this.postId,
+          userId: this.getUser._id,
+          title: this.title,
+          imageUrl: this.imageUrl,
+          categories: this.categories,
+          description: this.description
+        })
+        this.editPostDialog = false
       }
     },
     loadPost ({ _id, title, imageUrl, categories, description }, editPostDialog = true) {
@@ -287,6 +288,15 @@ export default {
       this.imageUrl = imageUrl
       this.categories = categories
       this.description = description
+    },
+    deleteUserPost (post) {
+      this.loadPost(post, false)
+      const deletePost = window.confirm('Are you sure you want to delete this post?')
+      if (deletePost) {
+        this.$store.dispatch('deleteUserPost', {
+          postId: this.postId
+        })
+      }
     }
   }
 }

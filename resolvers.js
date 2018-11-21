@@ -98,6 +98,10 @@ module.exports = {
       )
     },
 
+    deleteUserPost: async (_, { postId }, { Post }) => {
+      return await Post.findOneAndRemove({ _id: postId })
+    },
+
     addPostMessage: async (_, { messageBody, userId, postId }, { Post }) => {
       const newMessage = {
         messageBody,

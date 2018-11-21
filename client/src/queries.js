@@ -139,7 +139,15 @@ mutation ($postId: ID!, $userId: ID!, $title: String!, $imageUrl: String!, $cate
     _id
     avatar
   }
+ }
 }
+`
+
+export const DELETE_USER_POST = gql`
+mutation ($postId: ID!){
+  deleteUserPost(postId: $postId){
+  _id
+ }
 }
 `
 
