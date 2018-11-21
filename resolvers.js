@@ -89,6 +89,15 @@ module.exports = {
       }).save()
     },
 
+    updateUserPost: async(_, { postId, userId, title, imageUrl, description, categories }, { Post }) => {
+      return await Post.findOneAndUpdate(
+        // We are sure that the post is it with id and user id as well
+        {_id: postId, createdBy: userId },
+        { $set: { title, imageUrl, categories, description } },
+        { new: true }
+        )
+    },
+
     addPostMessage: async (_, { messageBody, userId, postId }, { Post }) => {
       const newMessage = {
         messageBody,
