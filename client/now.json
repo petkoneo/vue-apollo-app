@@ -1,5 +1,6 @@
 {
   "name": "shareless",
+  "version": 1,
   "type": "static",
   "static": {
     "public": "dist",

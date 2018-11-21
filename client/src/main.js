@@ -24,7 +24,7 @@ Vue.component('form-alert', FormAlert)
 
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri: 'http://localhost:4000/graphql'
+  uri: 'https://shareless-back-xhlcqrrysq.now.sh/graphql'
 })
 
 // Including Authorization Token With request to backend
