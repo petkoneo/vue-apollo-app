@@ -43,7 +43,7 @@ const server = new ApolloServer({
     message: error.message.replace('Context creation failed:', '')
   }),
   formatResponse: response => {
-    console.log(response)
+    // console.log(response)
     return response
   },
   context: async ({ req }) => {
