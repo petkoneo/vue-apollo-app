@@ -12,7 +12,9 @@ import {
   ADD_POST,
   SEARCH_POSTS,
   GET_USER_POST,
-  UPDATE_USER_POST, DELETE_USER_POST
+  UPDATE_USER_POST,
+  DELETE_USER_POST,
+  INFINITE_SCROLL_POSTS
 } from './queries'
 
 Vue.use(Vuex)
@@ -212,7 +214,17 @@ export default new Vuex.Store({
               _id: -1,
               ...payload
             }
-          }
+          },
+          // Rerun spoeific queries for fresh data
+          refetchQueries: [
+            {
+              query: INFINITE_SCROLL_POSTS,
+              variables: {
+                pageNum: 1,
+                pageSize: 2
+              }
+            }
+          ]
         })
         .then(({ data }) => {
           console.log(data)
