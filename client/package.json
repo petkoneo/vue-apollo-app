@@ -9,38 +9,43 @@
     "deploy": "npm run build && now --public && now alias"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
-    "apollo-cache-inmemory": "^1.3.11",
-    "apollo-client": "^2.4.7",
-    "apollo-link": "^1.2.6",
-    "apollo-link-error": "^1.1.5",
-    "apollo-link-http": "^1.5.9",
-    "graphql": "^14.0.2",
-    "graphql-tag": "^2.10.0",
-    "material-design-icons-iconfont": "^4.0.3",
-    "register-service-worker": "^1.5.2",
+    "@babel/polyfill": "^7.4.4",
+    "apollo-cache-inmemory": "^1.6.2",
+    "apollo-client": "^2.6.2",
+    "apollo-link": "^1.2.11",
+    "apollo-link-error": "^1.1.10",
+    "apollo-link-http": "^1.5.14",
+    "graphql": "^14.3.1",
+    "graphql-tag": "^2.10.1",
+    "material-design-icons-iconfont": "^5.0.1",
+    "register-service-worker": "^1.6.2",
     "roboto-fontface": "*",
-    "vue": "^2.5.21",
+    "vue": "^2.6.10",
     "vue-apollo": "^3.0.0-beta.26",
-    "vue-router": "^3.0.2",
-    "vuetify": "^1.3.14",
-    "vuex": "^3.0.1"
+    "vue-router": "^3.0.6",
+    "vuetify": "^1.5.14",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-eslint": "^3.2.1",
-    "@vue/cli-plugin-pwa": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-plugin-pwa": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.10.0",
-    "eslint-plugin-vue": "^5.0.0",
-    "lint-staged": "^8.1.0",
-    "node-sass": "^4.11.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.2.2",
+    "lint-staged": "^8.2.0",
+    "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
+<<<<<<< HEAD
     "vue-cli-plugin-axios": "0.0.4",
     "vue-cli-plugin-vuetify": "^0.4.6",
     "vue-template-compiler": "^2.5.21"
+=======
+    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-template-compiler": "^2.6.10"
+>>>>>>> dd262e0a5dae30c9671181fca81ef43004913a72
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
